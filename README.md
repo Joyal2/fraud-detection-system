@@ -62,32 +62,6 @@ Reproducible ML pipeline (data & model regenerated via code)
                 │ Synthetic Data Gen  │
                 │ Behavioral Features │
                 └────────────────────┘
-📂 Project Structure
-
-
-fraud-detection-system/
-│
-├── data/
-│   └── synthetic/
-│       └── transactions.csv
-│
-├── src/
-│   ├── data/
-│   │   └── generate_data.py
-│   │
-│   ├── models/
-│   │   ├── train.py
-│   │   └── fraud_model.pkl
-│   │
-│   └── api/
-│       └── main.py
-│
-├── frontend/
-│   └── app.py
-│
-├── requirements.txt
-└── README.md
-
 
 
 ⚙️ Tech Stack
