@@ -1,50 +1,201 @@
-1. Project Overview
-This project implements a real-time behavioral fraud detection system using synthetic transaction data,
-machine learning, and a modern API + frontend stack. The system classifies transactions into APPROVE,
-REVIEW, or BLOCK without exposing internal fraud scores, mimicking real financial systems.
-2. Project Structure
+🚨 Fraud Detection System
+
+Behavioral Fraud Detection using ML, FastAPI & Streamlit
+
+
+
+
+
+
+
+
+📌 Project Overview
+
+This project implements a real-time behavioral fraud detection system that evaluates financial transactions and classifies them into:
+
+✅ APPROVE
+
+⚠️ REVIEW
+
+🚫 BLOCK
+
+Unlike simple rule-based systems, this solution uses user-level behavioral patterns and a machine learning model (XGBoost) to make decisions.
+Fraud risk scores are intentionally hidden from the UI to reflect real-world banking systems.
+
+🧠 Key Features
+
+Behavioral fraud detection (not static rules)
+
+User transaction velocity analysis
+
+Spending deviation detection
+
+Night-time & new-merchant risk modeling
+
+REST API using FastAPI
+
+Interactive frontend using Streamlit
+
+Reproducible ML pipeline (data & model regenerated via code)
+
+
+🏗️ System Architecture
+
+                ┌────────────────────┐
+                │  Streamlit Frontend │
+                │  (Decision Only UI) │
+                └─────────▲──────────┘
+                          │ HTTP POST
+                          │
+                ┌─────────┴──────────┐
+                │   FastAPI Backend   │
+                │  Feature Engineering│
+                │  + ML Inference     │
+                └─────────▲──────────┘
+                          │
+                ┌─────────┴──────────┐
+                │  XGBoost Model      │
+                │  (fraud_model.pkl)  │
+                └─────────▲──────────┘
+                          │
+                ┌─────────┴──────────┐
+                │ Synthetic Data Gen  │
+                │ Behavioral Features │
+                └────────────────────┘
+📂 Project Structure
+
 fraud-detection-system/
- data/synthetic/transactions.csv
- src/data/generate_data.py
- src/models/train.py
- src/models/fraud_model.pkl
- src/api/main.py
- frontend/app.py
- requirements.txt
-3. Environment Setup
-Create and activate a virtual environment, then install dependencies using pip and the provided
-requirements file.
-Commands:
+│
+├── data/
+│   └── synthetic/
+│       └── transactions.csv
+│
+├── src/
+│   ├── data/
+│   │   └── generate_data.py
+│   │
+│   ├── models/
+│   │   ├── train.py
+│   │   └── fraud_model.pkl
+│   │
+│   └── api/
+│       └── main.py
+│
+├── frontend/
+│   └── app.py
+│
+├── requirements.txt
+└── README.md
+
+
+⚙️ Tech Stack
+
+Python 3.14
+
+Pandas / NumPy
+
+XGBoost
+
+Scikit-learn
+
+FastAPI
+
+Uvicorn
+
+Streamlit
+
+
+🚀 How to Run the Project (Windows)
+
+1️⃣ Create & Activate Virtual Environment
 python -m venv venv
 venv\Scripts\activate
+
+2️⃣ Install Dependencies
 pip install -r requirements.txt
-4. Data Generation
-The data generator creates user-level transaction histories with behavioral features such as velocity,
-spending deviation, night activity, and merchant novelty. Fraud prevalence is intentionally increased
-(~40%) for demonstration purposes.
-Command:
+
+3️⃣ Generate Synthetic Behavioral Data
 python src/data/generate_data.py
-5. Model Training
-An XGBoost classifier is trained using behavioral features. The trained model is saved as fraud_model.pkl
-and later loaded by the API.
-Command:
+
+
+Expected:
+
+Fraud rate: ~35–40%
+
+4️⃣ Train the Fraud Detection Model
 python src/models/train.py
-6. Backend API (FastAPI)
-The FastAPI service exposes a /predict endpoint. It receives raw transaction details, computes derived
-behavioral features internally, and returns a decision without exposing the fraud score.
-Command:
+
+
+Output:
+
+Model saved to src/models/fraud_model.pkl
+
+5️⃣ Start Backend API (FastAPI)
 uvicorn src.api.main:app
-7. Frontend (Streamlit)
-The Streamlit frontend provides a simple UI for entering transaction details and displaying the fraud
-decision (APPROVE, REVIEW, BLOCK).
-Command:
+
+
+API available at:
+
+http://127.0.0.1:8000
+
+6️⃣ Start Frontend (Streamlit)
 streamlit run frontend/app.py
-8. End-to-End Run Order
-1. Activate virtual environment
-2. Generate data
-3. Train model
-4. Start FastAPI backend
-5. Start Streamlit frontend
-9. Notes
-Fraud scores are intentionally hidden from the frontend to reflect real-world fraud system design.
-Thresholds and fraud prevalence can be adjusted easily via the data generation and API logic
+
+
+Frontend opens at:
+
+http://localhost:8501
+
+🧪 Sample Test Cases
+High Risk (BLOCK)
+{
+  "transaction_amount": 1200,
+  "is_new_merchant": 1,
+  "user_txn_count_1h": 6,
+  "user_txn_count_24h": 15,
+  "user_avg_amount_24h": 140,
+  "is_night_for_user": 1
+}
+
+Low Risk (APPROVE)
+{
+  "transaction_amount": 80,
+  "is_new_merchant": 0,
+  "user_txn_count_1h": 1,
+  "user_txn_count_24h": 3,
+  "user_avg_amount_24h": 100,
+  "is_night_for_user": 0
+}
+
+
+🔐 Design Decisions
+
+Fraud scores are hidden to prevent system gaming
+
+Backend controls feature engineering (trusted layer)
+
+Data & models excluded from GitHub for reproducibility
+
+Fraud prevalence increased for demo & learning purposes
+
+📈 Future Improvements
+
+Cost-based decision thresholds
+
+SHAP-based explainability
+
+Kafka streaming ingestion
+
+User-level long-term profiling
+
+Cloud deployment (Render + Streamlit Cloud)
+
+👤 Author
+
+Joyal Jomon
+Aspiring Data Scientist | ML Engineer
+GitHub: https://github.com/Joyal2
+
+⭐ If You Like This Project
+
+Give it a star ⭐ and feel free to fork!
