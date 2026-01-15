@@ -83,14 +83,14 @@ Streamlit
 
 🚀 How to Run the Project (Windows)
 
-1️⃣ Create & Activate Virtual Environment
-python -m venv venv
+1️⃣ Create & Activate Virtual Environment : 
+python -m venv venv 
 venv\Scripts\activate
 
-2️⃣ Install Dependencies
+2️⃣ Install Dependencies : 
 pip install -r requirements.txt
 
-3️⃣ Generate Synthetic Behavioral Data
+3️⃣ Generate Synthetic Behavioral Data : 
 python src/data/generate_data.py
 
 
@@ -98,7 +98,7 @@ Expected:
 
 Fraud rate: ~35–40%
 
-4️⃣ Train the Fraud Detection Model
+4️⃣ Train the Fraud Detection Model : 
 python src/models/train.py
 
 
@@ -106,7 +106,7 @@ Output:
 
 Model saved to src/models/fraud_model.pkl
 
-5️⃣ Start Backend API (FastAPI)
+5️⃣ Start Backend API (FastAPI): 
 uvicorn src.api.main:app
 
 
