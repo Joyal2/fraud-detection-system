@@ -1,0 +1,15 @@
+# Virtual environment
+venv/
+
+# Python cache
+__pycache__/
+*.pyc
+
+# Data & models (reproducible)
+data/synthetic/transactions.csv
+src/models/fraud_model.pkl
+
+# OS / editor
+.DS_Store
+.vscode/
+.env
